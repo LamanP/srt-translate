@@ -1,0 +1,12 @@
+﻿1
+00:00:02,590 --> 00:00:02,660
+This is the introduction to what I'm about to tell you. It's
+not a very interesting story, and you'll probabably get bored by it.
+
+2
+00:00:02,660 --> 00:00:06,470
+I was born back in 1962, just before the extreme cold winter of 1963 began.
+
+3
+00:00:08,520 --> 00:00:08,590
+This really made me a tough guy. I hardly feel it when it's cold outside.

@@ -1,0 +1,4 @@
+node_modules/**
+javascript/**
+tsdecl/**
+example_*.html

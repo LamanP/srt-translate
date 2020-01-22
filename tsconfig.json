@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "sourceMap": true,
+        "outDir": "./javascript",
+        "declaration": true,
+        "declarationDir": "./tsdecl",
+        "declarationMap": false
+    }
+}
