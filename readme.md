@@ -20,6 +20,10 @@ The idea is as follows:
 
     `npm install -g typescript`.
 
+* To use the web server, run
+
+    `npm install -g http-server`
+
 * Install the dependencies for this package:
 
     `npm install`

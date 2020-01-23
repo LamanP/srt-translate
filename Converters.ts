@@ -1,59 +1,6 @@
+import { Html } from "./Html";
+
 export module Converters {
-    const htmlParser = require( "node-html-parser" );
-
-    class Element {
-        private readonly name: string;
-        private readonly attributes: any;
-        private readonly children: Element[];
-        private _fullClose: boolean;
-        private _text: string;
-
-        constructor( name: string ) {
-            this.name = name;
-            this.attributes = {};
-            this.children = [];
-            this._text = "";
-            this._fullClose = false;
-        }
-
-        append( name: string ): Element {
-            const child = new Element( name );
-            this.children.push( child );
-            return child;
-        }
-
-        attr( name: string, value: string ): this {
-            this.attributes[ name ] = value;
-            return this;
-        }
-
-        text( text: string ): this {
-            this._text = text;
-            return this;
-        }
-
-        fullClose( _fullClose: boolean ): this {
-            this._fullClose = _fullClose;
-            return this;
-        }
-
-        stringify(): string {
-            let ret = "<" + this.name;
-            Object.keys( this.attributes ).forEach ( ( key: string ) => {
-                ret += " " + key + "=\"" + this.attributes[ key ] + "\"";
-            } );
-            if ( !this._fullClose && this.children.length ===0 && this._text.length === 0 )
-                ret += "/>";
-            else {
-                ret += ">" + this._text;
-                this.children.forEach( ( child: Element ) => {
-                    ret += child.stringify();
-                } );
-                ret += "</" + this.name + ">";
-            }
-            return ret;
-        }
-    }
 
     type ParsedSrtItem = {
         lineNumber: number,
@@ -102,7 +49,8 @@ export module Converters {
     export function SrtToHtml( htmlName: string, srtData: string, srclang: string, trglang: string ): string {
 
         // Initialize HTML document
-        const html = new Element( "html" ).attr( "lang", trglang );
+        const doc = new Html.HtmlDocument();
+        const html = doc.html.attr( "lang", trglang );
         const head = html.append( "head" );
         head.append( "title" ).text( htmlName );
         const body = html.append( "body" );
@@ -117,7 +65,7 @@ export module Converters {
 
         // Create a button and a script to convert back to SRT
         body.append( "div" ).append( "button" ).attr( "id", "srtButton" ).text( "get SRT" );
-        body.append( "div" ).append( "textarea" ).attr( "id", "srtResult" ).attr( "cols", "70" ).attr( "rows", "40" ).fullClose( true );
+        body.append( "div" ).append( "textarea" ).attr( "id", "srtResult" ).attr( "cols", "70" ).attr( "rows", "40" );
         body.append( "script" ).attr( "type", "text/javascript" ).text(
             [
                 "const button = document.getElementById( 'srtButton' );",
@@ -135,14 +83,7 @@ export module Converters {
             ].join( "\r\n" )
         );
         console.log( "A total of " + items.length + " item(s) have been converted to HTML." );
-        return "<!DOCTYPE html>" + html.stringify();
+        return doc.stringify();
     }
 
-    export function htmlToSrt( htmlName: string, htmlData: string ): string {
-        let ret = "";
-
-        const jsonData = htmlParser.parse( htmlData );
-        console.log( JSON.stringify( jsonData, null, 2 ) );
-        return ret;
-    }
 }
