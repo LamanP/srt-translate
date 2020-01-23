@@ -3,7 +3,7 @@ export module Converters {
 
     class Element {
         private readonly name: string;
-        private readonly attributes: object;
+        private readonly attributes: any;
         private readonly children: Element[];
         private _fullClose: boolean;
         private _text: string;

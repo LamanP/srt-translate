@@ -8,7 +8,7 @@ export module FileSystem {
      */
     export function readFile( path: string ): Promise<string> {
         return new Promise<string>( ( resolve, reject ) => {
-            fs.readFile( path, 'utf8', ( err, data) => {
+            fs.readFile( path, 'utf8', ( err: any, data: any ) => {
                 if ( err )
                     reject( err );
                 else {
@@ -25,7 +25,7 @@ export module FileSystem {
      */
     export function writeFile( path: string, data: string ): Promise<void> {
         return new Promise<void>( (resolve, reject ) => {
-            fs.writeFile( path, data, ( err ) => {
+            fs.writeFile( path, data, ( err: any ) => {
                 if ( err )
                     reject( err );
                 else {
@@ -41,7 +41,7 @@ export module FileSystem {
 
     export function listFolder( inFolder: string, nameRegEx?: RegExp ) : Promise<FileOrFolder[]> {
         return new Promise<FileOrFolder[]>( ( resolve, reject ) => {
-            fs.readdir( inFolder, ( err,  items) => {
+            fs.readdir( inFolder, ( err: any,  items: any[] ) => {
                 if ( err )
                     reject( err );
                 else {

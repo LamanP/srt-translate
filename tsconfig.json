@@ -5,6 +5,7 @@
         "outDir": "./javascript",
         "declaration": true,
         "declarationDir": "./tsdecl",
-        "declarationMap": false
+        "declarationMap": false,
+        "strict": true
     }
 }
