@@ -1,0 +1,16 @@
+.widget .container {
+    padding: 0.4em;
+    border: 1px solid gray;
+    border-radius: 0.2em;
+}
+
+.widget .container .caption {
+    padding: 0.4em;
+    background-color: lightgray;
+    font-weight: bold;
+}
+
+.widget .container .clientSurface {
+    padding: 1em;
+    overflow: auto;
+}

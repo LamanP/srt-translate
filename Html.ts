@@ -9,6 +9,11 @@ export module Html {
         Normal
     }
 
+    type IndentedLine = {
+        indent: string;
+        content: string;
+    }
+
     function html5elementType( elementName: string ): Html5ElementType
     {
         switch( elementName )
@@ -65,6 +70,10 @@ export module Html {
             return this;
         }
 
+        clazz( classes: string ): this {
+            return this.attr( "class", classes );
+        }
+
         text( text: string ): this {
             this._text = text;
             return this;
@@ -88,6 +97,45 @@ export module Html {
             }
             return ret;
         }
+
+        private indented( lines: IndentedLine[], indent: string ): void {
+            let line = "<" + this.name;
+            Object.keys( this.attributes ).forEach ( ( key: string ) => {
+                line += " " + key + "=\"" + this.attributes[ key ] + "\"";
+            } );
+            const fullClose = html5elementType( this.name ) == Html5ElementType.RawText;
+            if ( !fullClose && this.children.length ===0 && this._text.length === 0 ) {
+                line += "/>";
+                lines.push( {
+                    indent: indent,
+                    content: line
+                } );
+            }
+            else {
+                line += ">" + this._text;
+                lines.push( {
+                    indent: indent,
+                    content: line
+                } );
+                this.children.forEach( ( child: Element ) => {
+                    child.indented( lines, indent + "  " );
+                } );
+                if ( html5elementType( this.name ) != Html5ElementType.Void )
+                    lines.push( {
+                        indent: indent,
+                        content: "</" + this.name + ">"
+                    } );
+            }
+        }
+
+        pretty(): string {
+            const lines: IndentedLine[] = [];
+            this.indented( lines, "" );
+            return lines.map ( ( line: IndentedLine ) => {
+                return line.indent + line.content;
+            } ).join( "\r\n" );
+        }
+
     }
 
     export class HtmlDocument {
@@ -129,8 +177,19 @@ export module Html {
             return this;
         }
 
+        appendES6Module( url: string, parent?: Element ): this {
+            const addHere = parent || this.head;
+            addHere.append( "script" )
+                .attr( "type", "module" )
+                .attr( "src", ver( url ) );
+            return this;
+        }
+
         stringify() {
             return "<!DOCTYPE>" + this._html.stringify();
+        }
+        pretty(): string {
+            return "<!DOCTYPE>\r\n" + this._html.pretty();
         }
     }
 }

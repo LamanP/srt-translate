@@ -36,7 +36,8 @@ export module FileSystem {
     }
 
     export type FileOrFolder = {
-        name: string;
+        isFolder: boolean,
+        name: string
     };
 
     export function listFolder( inFolder: string, nameRegEx?: RegExp ) : Promise<FileOrFolder[]> {
@@ -48,9 +49,13 @@ export module FileSystem {
                     let content: FileOrFolder[] = [];
                     for ( var i=0; i < items.length; i++ ) {
                         if ( !nameRegEx || nameRegEx.test( items[ i ] ) ) {
-                            fs.stat( )
-                            content.push( {
-                                name: items[ i ]
+                            fs.stat( inFolder + "/" + items[ i ], ( stat: any ) => {
+                                content.push( {
+                                    isFolder: stat.isDirectory(),
+                                    name: items[ i ]
+                                } );
+                                if ( i == items.length - 1 )
+                                    resolve( content );
                             } );
                         }
                     }

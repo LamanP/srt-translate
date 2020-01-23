@@ -1,0 +1,11 @@
+.widget .filebrowser .pathbar {
+    border-bottom: 1px gray solid;
+    padding: 0.4px;
+    font-weight: bold;
+}
+
+.widget .filebrowser .fileEntry .selected {
+    background-color: darkgray;
+    color: white;
+    font-weight: bold;
+}

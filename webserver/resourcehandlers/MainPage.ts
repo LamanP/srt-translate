@@ -13,9 +13,13 @@ export class MainPage extends AbstractResourceHandler {
         const doc = new Html.HtmlDocument();
         doc.head.append( "title" ).text( "SRT editor" );
         doc
-            .appendCssStyleSheet( "/css/mainpage.css" )
-            .appendJavascript( "/js/mainpage.js" );
+            .appendCssStyleSheet( "/css/default.css" )
+            .appendJavascript( "https://d3js.org/d3.v5.min.js" )
+            .appendES6Module( "/js/mainpage.js" );
         doc.body.append( "h1" ).text( "SRT Editor" );
-        this.serveContent( res, doc.stringify(), "text/html" );
+        doc.body.append( "div" ).clazz( "intro" ).text( "This editor lets you create/upload projects to the server consisting of a video file and a srt file. The srt file is parsed and rendered in a user-friendly way." +
+            " You are provided with several editing functions and if you're using chrome, you can have the SRT automatically translated by Google Translate<sup>TM</sup>. Click <a href=\"/htmldocs/help.html\" target=\"_blank\">here</a> for more help." );
+
+        this.serveContent( res, doc.pretty(), "text/html" );
     }
 }
