@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "encode": "node ./node_modules/ts-node/dist/bin.js index.ts",
-    "start": "node ./node_modules/ts-node/dist/bin.js webserver/SrtServer.ts",
+    "start": "node ./javascript/bootstrapserver.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Peter Laman",
   "license": "ISC",
   "dependencies": {
     "@types/d3": "^5.7.2",
+    "d3": "^5.15.0",
+    "requirejs": "^2.3.6",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },

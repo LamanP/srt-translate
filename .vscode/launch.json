@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/javascript/webserver/SrtServer.js",
+            "program": "${workspaceFolder}/javascript/bootstrapserver.js",
             "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
                 "${workspaceFolder}/javascript/**/*.js"

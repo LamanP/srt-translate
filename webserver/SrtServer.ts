@@ -1,10 +1,7 @@
 import { createServer, IncomingMessage, ServerResponse, Server } from "http";
 import { AbstractResourceHandler } from "./AbstractResourceHandler";
-import { MainPage } from "./resourcehandlers/MainPage";
-import { CssHandler } from "./resourcehandlers/CssHandler";
-import { ClientJsHandler } from "./resourcehandlers/ClientJsHandler";
-import { HtmlDocs } from "./resourcehandlers/HtmlDocs";
 import { ServerFileSystem } from "./resourcehandlers/ServerFileSystem";
+import { StaticContentHandler } from "./resourcehandlers/StaticContentHandler";
 
 export class SrtServer {
     private _port: number;
@@ -77,8 +74,5 @@ export class SrtServer {
 new SrtServer()
     .port( 3000 ) // Change if it conflicts
     .registerHandler( new ServerFileSystem() )
-    .registerHandler( new MainPage() )
-    .registerHandler( new CssHandler() )
-    .registerHandler( new ClientJsHandler() )
-    .registerHandler( new HtmlDocs() )
+    .registerHandler( new StaticContentHandler() )
     .start();

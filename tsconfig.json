@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
-        "target": "es2015",
+        "target": "ES6",
+        "module": "AMD",
         "sourceMap": true,
-        "outDir": "./javascript",
+        "outDir": "./javascript/transpiled",
         "declaration": true,
         "declarationDir": "./tsdecl",
         "declarationMap": false,

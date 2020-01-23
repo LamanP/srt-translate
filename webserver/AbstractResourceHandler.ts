@@ -1,7 +1,9 @@
 import { RequestListener, ServerResponse, IncomingMessage } from "http";
 
+export type PathSelector = string | ( ( path: string) => boolean );
+
 export abstract class AbstractResourceHandler {
-    private _pathSelector: string;
+    private _pathSelector: PathSelector;
     private _methods: any;
 
     constructor() {
@@ -10,10 +12,11 @@ export abstract class AbstractResourceHandler {
     }
 
     /**
-     * Specifies the path selector. This handler will be invoked if the URL path starts with this path
-     * @param _pathSelector The path selector for this resource
+     * Specifies the path selector.
+     * @param _pathSelector The path selector for this resource. If it's a string, paths that start with a url are served by this handler.
+     * If it's a function, the function is called to determine whether a url is handled by this handler.
      */
-    pathSelector( _pathSelector: string ): this {
+    pathSelector( _pathSelector: PathSelector ): this {
         this._pathSelector = _pathSelector;
         return this;
     }
@@ -26,7 +29,12 @@ export abstract class AbstractResourceHandler {
      */
     handle( req: IncomingMessage, res: ServerResponse ): boolean {
         const url = req.url;
-        const pathOk = url && url.startsWith( this._pathSelector ) && ( url.length == this._pathSelector.length || "?&/".indexOf( url[ this._pathSelector.length ]) >= 0 );
+        let pathOk: boolean;
+        if ( typeof this._pathSelector === "string" )
+            pathOk = !!url && url.startsWith( this._pathSelector ) && ( url.length == this._pathSelector.length || "?&/".indexOf( url[ this._pathSelector.length ]) >= 0 );
+        else
+            pathOk = !!url && this._pathSelector( url );
+
         const allOk = pathOk && req.method && this._methods.hasOwnProperty( req.method.toLowerCase() );
         if ( allOk && req.method ) {
             const handler: RequestListener = this._methods[ req.method.toLowerCase() ];

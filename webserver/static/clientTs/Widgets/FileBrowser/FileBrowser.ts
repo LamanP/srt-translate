@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { ClientFileSystemApi } from "../../ClientFileSystem/ClientFileSystemApi";
 import { ClientFileSystem } from "../../ClientFileSystem/ClientFileSystem";
-import { AnyD3Selection, useCss, Size } from "../../D3Misc";
+import { AnyD3Selection, useCss, Size } from "../../D3Util";
 import { Widget } from "./Widget";
 
 useCss( "/css/Widget/FileBrowser/filebrowser.css" );

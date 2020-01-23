@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { AnyD3Selection, useCss, Size } from "../../D3Misc";
+import { AnyD3Selection, useCss, Size } from "../../D3Util";
 
 useCss( "/css/Widget/widget.css" );
 

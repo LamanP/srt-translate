@@ -13,6 +13,15 @@ export function ver( url: string ): string {
 }
 
 /**
+ * Replaces all occurrences of ${version} in the input content with the current version number.
+ * This allows static files to contain links to versioned content.
+ * @param content Content to be 'versioned'
+ */
+export function verContent( content: string ): string {
+    return content.replace( /\$\{version\}/g, "" + version );
+}
+
+/**
  * Strips the status version number from an url
  * @param url url to be stripped
  */

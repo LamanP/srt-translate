@@ -1,5 +1,5 @@
 node_modules/**
-javascript/**
+javascript/transpiled/**
 tsdecl/**
 example_*.html
 sandbox.ts
