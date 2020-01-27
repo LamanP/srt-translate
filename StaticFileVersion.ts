@@ -1,7 +1,7 @@
 /**
  * Static file version numbers. Update this number each time static files have been changed
  */
-const version = 1;
+export const version = 1;
 
 /**
  * Appends a version number to a static resource

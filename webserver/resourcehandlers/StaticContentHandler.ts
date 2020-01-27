@@ -75,23 +75,28 @@ export class StaticContentHandler extends AbstractResourceHandler {
         // Is this the home page?
         let resourceName: string;
         let contentType: string;
+        let versionLinks = false;
         const extInfo = urlToExtInfo( parsedUrl );
-        if ( !extInfo ) {
-            self.resourceNotFound( req, res );
-            return;
-        }
-        contentType = extInfo.contentType;
-        if ( req.url = "/" ) {
+        if ( req.url === "/" ) {
             resourceName = "./webserver/static/default.html";
+            versionLinks = true;
+            contentType = "text/html";
 
         // Is this third party stuff?
-        } else if ( parsedUrl.path.length > 0 && parsedUrl.path[ 0 ] === "3rdparty") {
-            resourceName = "./javascript/" + parsedUrl.resourceName;
+        } else if ( extInfo && parsedUrl.path.length > 0 && parsedUrl.path[ 0 ] === "3rdparty") {
+            resourceName = "./javascript/3rdparty/" + parsedUrl.resourceName;
+            contentType = "text/javascipt";
         } else {
+            if ( !extInfo ) {
+                self.resourceNotFound( req, res );
+                return;
+            }
             resourceName = nover( extInfo.serverPath + unslash( req.url ) );
+            contentType = extInfo.contentType;
+            versionLinks = extInfo.versionLinks;
         }
         FileSystem.readFile( resourceName ).then( ( content: string ) => {
-            if ( extInfo.versionLinks )
+            if ( versionLinks )
                 content = verContent( content );
             self.serveContent( res, content, contentType );
         } ).catch( ( reason: any ) => {
